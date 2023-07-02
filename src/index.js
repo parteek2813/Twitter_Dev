@@ -3,20 +3,22 @@ const connect = require("./config/database");
 
 const app = express();
 const Tweet = require("./models/tweet");
+const HashtagRepository = require("./repository/hashtag-repository");
 
 const PORT = 3000;
 
-const TweetRepository = require("./repository/tweet-repository");
+// const { TweetRepository } = require("./repository/index");
+const TweetService = require("./services/tweet-service");
 const Comment = require("./models/comments");
 
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   await connect();
   console.log("Mongo db connected");
-
-  const tweets = await Tweet.find({
-    content: ["First tweet", "4th tweet", "12123me"],
+  let service = new TweetService();
+  const tweet = service.create({
+    content:
+      "I am #ecited and having #fun with #coding #lovelife",
   });
-
-  console.log(tweets);
+  console.log(tweet);
 });
