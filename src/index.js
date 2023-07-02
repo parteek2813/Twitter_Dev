@@ -19,7 +19,6 @@ app.listen(PORT, async () => {
   console.log("Mongo db connected");
   let ser = new service();
   await ser.create({
-    content: "Done with #refractor #again"
+    content: "my other #code #WORKS"
   }) 
- 
 });
