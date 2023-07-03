@@ -22,12 +22,8 @@ app.listen(PORT, async () => {
   const userRepo = new UserRepository();
   const tweetRepo = new TweetRepository();
   const tweets = await tweetRepo.getAll(0, 10);
-  const user = await userRepo.create({
-    email: "Parteek@admin.com",
-    password: "1233456",
-    name: "Parteek",
-  });
+  const users = await userRepo.getAll();
 
   const likeService = new LikeService();
-  await likeService.toggleLike(tweets[0].id, "Tweet", user.id);
+  await likeService.toggleLike(tweets[0].id, "Tweet", users[0].id);
 });

@@ -1,3 +1,4 @@
+import Tweet from "../models/tweet.js";
 import { TweetRepository, LikeRepository } from "../repository/index.js";
 
 class LikeService {
@@ -8,12 +9,9 @@ class LikeService {
 
   async toggleLike(modelId, modelType, userId) {
     // /api/v1/likes/toggle?id=modelId&type=Tweet
-    console.log(modelId); // gettting the model id
-    console.log(modelType);
+
     if (modelType == "Tweet") {
       var likeable = await this.tweetRepository.get(modelId);
-      likeable.populate({ path: "likes" });
-      console.log(likeable);
     } else if (modelType == "Comment") {
       //todo
     } else {
