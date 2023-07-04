@@ -11,7 +11,7 @@ class LikeService {
     // /api/v1/likes/toggle?id=modelId&type=Tweet
 
     if (modelType == "Tweet") {
-      var likeable = await this.tweetRepository.get(modelId);
+      var likeable = await this.tweetRepository.find(modelId);
     } else if (modelType == "Comment") {
       //todo
     } else {
@@ -26,11 +26,14 @@ class LikeService {
 
     if (exists) {
       // if there is like, we gonna delete it
-
-      likeable.likes.pull(exists.id);
-      await likeable.save();
-      await exists.remove(); // remove the doc of like
-      var isAdded = false;
+      if (exists instanceof Tweet) {
+        likeable.likes.pull(exists.id);
+        await likeable.save();
+      } else {
+        console.log("Unable to remove like. Invalid data type.");
+      }
+      await this.likeRepository.destroy(exists._id);
+      var isAdded = true;
     } else {
       // otherwise create new like
       const newLike = await this.likeRepository.create({
@@ -41,7 +44,7 @@ class LikeService {
       likeable.likes.push(newLike);
       await likeable.save();
 
-      var isAdded = true;
+      var isAdded = false;
     }
     return isAdded;
   }
