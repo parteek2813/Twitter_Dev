@@ -17,7 +17,7 @@ export const createComment = async (req, res) => {
       err: {},
     });
   } catch (error) {
-    return res.status(201).json({
+    return res.status(500).json({
       success: false,
       message: "Something went wrong",
       data: {},
