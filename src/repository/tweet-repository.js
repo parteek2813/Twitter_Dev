@@ -28,6 +28,7 @@ class TweetRepository extends CrudRepository {
   }
 
   async getAll(offset, limit) {
+    console.log("Calling getAll");
     try {
       const tweet = await Tweet.find().skip(offset).limit(limit);
       return tweet;
